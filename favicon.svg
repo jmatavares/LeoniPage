@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect width="64" height="64" rx="12" fill="#1f6feb"/>
+  <!-- axes -->
+  <path d="M10 8 V54 H58" fill="none" stroke="#ffffff" stroke-opacity="0.55" stroke-width="3" stroke-linecap="round"/>
+  <!-- Buckley-Leverett profile: rarefaction, shock, initial saturation -->
+  <path d="M10 12 C20 16 28 20 38 24 V50 H58" fill="none" stroke="#ffffff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
