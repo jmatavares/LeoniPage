@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Buckley-Leverett Analytical</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/plotly.js-dist-min@2.35.2/plotly.min.js"></script>
+</head>
+<body>
+  <div class="layout">
+    <!-- ================= INPUT PANEL ================= -->
+    <aside class="sidebar">
+      <header>
+        <h1>Buckley-Leverett</h1>
+        <p class="subtitle">Analytical solution</p>
+      </header>
+
+      <form id="input-form" autocomplete="off">
+        <fieldset>
+          <legend>Fluids</legend>
+          <label>μ<sub>w</sub> — water viscosity [cP]
+            <input type="number" id="mu_w" value="1.0" step="any" min="0">
+          </label>
+          <label>μ<sub>o</sub> — oil viscosity [cP]
+            <input type="number" id="mu_o" value="1.1" step="any" min="0">
+          </label>
+        </fieldset>
+
+        <fieldset>
+          <legend>Relative permeability (Corey)</legend>
+          <div class="row">
+            <label>S<sub>wc</sub>
+              <input type="number" id="Swc" value="0.0" step="any" min="0" max="1">
+            </label>
+            <label>S<sub>or</sub>
+              <input type="number" id="Sor" value="0.1" step="any" min="0" max="1">
+            </label>
+          </div>
+          <div class="row">
+            <label>k<sub>rw</sub> end
+              <input type="number" id="krw_end" value="1.0" step="any" min="0">
+            </label>
+            <label>k<sub>ro</sub> end
+              <input type="number" id="kro_end" value="1.0" step="any" min="0">
+            </label>
+          </div>
+          <div class="row">
+            <label>n<sub>w</sub>
+              <input type="number" id="nw" value="2.0" step="any" min="0">
+            </label>
+            <label>n<sub>o</sub>
+              <input type="number" id="no" value="2.0" step="any" min="0">
+            </label>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Porous medium</legend>
+          <label>φ — porosity
+            <input type="number" id="por" value="0.22" step="any" min="0" max="1">
+          </label>
+          <div class="row">
+            <label>A — area [cm²]
+              <input type="number" id="A" value="11.34" step="any" min="0">
+            </label>
+            <label>L — length [cm]
+              <input type="number" id="L" value="18" step="any" min="0">
+            </label>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Injection and times</legend>
+          <label>q<sub>inj</sub> — injection rate [cc/min]
+            <input type="number" id="q_inj" value="0.25" step="any" min="0">
+          </label>
+          <label>dt — time step [h]
+            <input type="number" id="dt" value="0.000625" step="any" min="0">
+          </label>
+          <label>times — number of steps (comma-separated)
+            <input type="text" id="tempos" value="1600, 4800">
+          </label>
+        </fieldset>
+
+        <fieldset>
+          <legend>Plots</legend>
+          <label>N — points to plot
+            <input type="number" id="N" value="130" step="1" min="10">
+          </label>
+        </fieldset>
+
+        <div class="actions">
+          <button type="submit" class="primary">Compute</button>
+          <button type="button" id="btn-reset">Reset defaults</button>
+          <button type="button" id="btn-csv">Export profiles (CSV)</button>
+        </div>
+
+        <p id="error" class="error" hidden></p>
+      </form>
+
+      <section class="results">
+        <h2>Results</h2>
+        <dl id="summary"></dl>
+        <div class="table-wrap">
+          <table id="times-table">
+            <thead>
+              <tr>
+                <th>steps</th><th>t [h]</th><th>V<sub>inj</sub> [cc]</th><th>PVI</th><th>x<sub>f</sub> [cm]</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
+    </aside>
+
+    <!-- ================= FIGURES ================= -->
+    <main class="plots">
+      <div class="plot-card wide"><div id="plot-profile" class="plot"></div></div>
+      <div class="plot-card"><div id="plot-kr" class="plot"></div></div>
+      <div class="plot-card"><div id="plot-fw" class="plot"></div></div>
+      <div class="plot-card"><div id="plot-dfw" class="plot"></div></div>
+      <div class="plot-card"><div id="plot-bl" class="plot"></div></div>
+    </main>
+  </div>
+
+  <script src="main.js"></script>
+</body>
+</html>
